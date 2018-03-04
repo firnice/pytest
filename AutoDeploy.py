@@ -3,18 +3,21 @@
 ###2015-06-04  python 2.7
 ###liyiliang
 
-import sys, os, time, shutil, filecmp,commands
+import sys, os, time, shutil, filecmp,commands,subprocess
 
 print ("start   .......");
-backup_war_path = "/usr/local/tomcat-gms2/bak"
+backup_war_path = "/usr/local/tomcat/bak"
 logs_path = '/tmp/log.log'
 current_date = time.strftime('%Y-%m-%d')
 current_datetime = time.strftime('%Y%m%d%H%M%S')
-tomcat_home = "/usr/local/tomcat-gms2/apache-tomcat-7.0.62"
+tomcat_home = "/usr/local/tomcat"
 filename = "gms"
+
 
 (tmp,path) = commands.getstatusoutput('pwd')
 source_war = "%s/%s.war" % (path,filename);
+print ("source_war   .......");
+
 
 def writeLogs(filename, contents):
     f = open(filename, 'a+');
@@ -62,7 +65,7 @@ backfile(path,path,filename)
 
 print "start application server.............begin............."
 print source_war
-kill_cmd = "kill `ps -ef | grep tomcat |awk '{print $2,$8,$9}'|grep 'java'|grep 'tomcat-gms2'| awk '{print $1}'`";
+kill_cmd = "kill `ps -ef | grep tomcat |awk '{print $2,$8,$9}'|grep 'java'|grep 'tomcat'| awk '{print $1}'`";
 os.system(kill_cmd);
 time.sleep(3);
 os.system("rm -rf %s/webapps/%s*" % (tomcat_home,filename));
